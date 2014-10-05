@@ -9,7 +9,9 @@
 require_once 'mysqli.php';
 
 
-$db=DB::getConnection();
+$db=new DB;
 $query='Select * FROM teams';
 
-$queryResult=DB::sqlQuery($query);
+$queryResult=$db->sqlQuery($query);
+echo "Num Rows: ".$db->numrows;
+$db->getResults();

@@ -4,6 +4,7 @@ define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
 define('DB_PASS', '');
 define('DB_NAME', 'soccer');
+define('PREFIX', 'tbl_');
 
 
 class DB {
@@ -15,34 +16,45 @@ class DB {
     private $_dbname = DB_NAME;
     private static $_instance;
     
-    private $_numrows;
+    public  $numrows;
+    private  $_queryExe;
 
-    private function __construct() {
+    public function __construct() {
         $this->_connection = new mysqli($this->_host, $this->_username, $this->_password, $this->_dbname);
 // Error handling
         if (mysqli_connect_error()) {
             trigger_error("Failed to conencto to MySQL: " . mysql_connect_error(), E_USER_ERROR);
         }
     }
-    public function getConnection()
-    {
-        if(!self::$_instance)
-        {
-            self::$_instance=new self();
-        }
-        return self::$_instance;
-    }
+//    public function getConnection()
+//    {
+//        if(!self::$_instance)
+//        {
+//            self::$_instance=new self();
+//        }
+//        return self::$_instance;
+//    }
     
     public function sqlQuery($query=''){
         if($query)
         {
-            $queryExe=self::$_instance->query($query);
-            $this->_numrows=$queryExe->num_rows;
+            $this->_queryExe=$this->_connection->query($query);
+            $this->numrows=$this->_queryExe->num_rows;
         }
         else
         {
             trigger_error('Query should not be null');
         }
+    }
+    public function getResults()
+    {
+        while($row = $this->_queryExe->fetch_assoc()){
+            echo $row['t_name']."<br>";
+        }
+    }
+    
+    public function __destruct() {
+        $this->_numrows='';
     }
 
 }
