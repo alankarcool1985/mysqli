@@ -6,3 +6,10 @@
  * and open the template in the editor.
  */
 
+require_once 'mysqli.php';
+
+
+$db=DB::getConnection();
+$query='Select * FROM teams';
+
+$queryResult=DB::sqlQuery($query);
