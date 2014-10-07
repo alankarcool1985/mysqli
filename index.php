@@ -10,7 +10,7 @@ require_once 'mysqli.php';
 
 
 $db=new DB;
-$query='Select * FROM teams';
+$query='Select * FROM teams LIMIT 1';
 
 $queryResult=$db->sqlQuery($query);
 echo "Num Rows: ".$db->numrows;
