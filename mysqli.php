@@ -66,6 +66,8 @@ class DB {
         }
         printf("SELECT %s FROM %s LIMIT %s",$columns,$this->tableName($tableName),$limit);
         $selectQuery= sprintf("SELECT %s FROM %s LIMIT %s",$columns,$this->tableName($tableName),$limit);
+       $this->rawQuery($selectQuery);
+       
 //        $query
         
     }
