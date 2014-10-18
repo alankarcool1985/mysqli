@@ -23,4 +23,4 @@ echo DB::$_prefix;
 $db->selectQuery($tableName, $columns,$limitFrom,$limitTo);
 
 //echo "Num Rows: ".$db->numrows;
-//$db->getResults();
+$db->getResults();
