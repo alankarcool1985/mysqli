@@ -4,7 +4,7 @@ define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
 define('DB_PASS', '');
 define('DB_NAME', 'soccer');
-define('PREFIX', 'tbl_');
+define('PREFIX', '');
 
 
 class DB {
@@ -15,6 +15,7 @@ class DB {
     private $_password = DB_PASS;
     private $_dbname = DB_NAME;
     private static $_instance;
+    public  static $_prefix; //table prefix
     
     public  $numrows;
     private  $_queryExe;
@@ -25,6 +26,7 @@ class DB {
         if (mysqli_connect_error()) {
             trigger_error("Failed to conencto to MySQL: " . mysql_connect_error(), E_USER_ERROR);
         }
+        self::$_prefix=PREFIX;
     }
 //    public function getConnection()
 //    {
@@ -35,7 +37,7 @@ class DB {
 //        return self::$_instance;
 //    }
     
-    public function sqlQuery($query=''){
+    public function rawQuery($query=''){
         if($query)
         {
             $this->_queryExe=$this->_connection->query($query);
@@ -52,9 +54,29 @@ class DB {
             echo $row['t_name']."<br>";
         }
     }
+    public function selectQuery($tableName,$columns=array(''),$limitFrom='',$limitTo='')
+    {
+        $columns =  count($columns)==0?'*':implode(',', $columns);
+        $limit='';
+        if($limitFrom<>''){
+            $limit .=$limitFrom.' , ';
+        }
+        if($limitTo<>''){
+            $limit .=$limitTo;
+        }
+        printf("SELECT %s FROM %s LIMIT %s",$columns,$this->tableName($tableName),$limit);
+        $selectQuery= sprintf("SELECT %s FROM %s LIMIT %s",$columns,$this->tableName($tableName),$limit);
+//        $query
+        
+    }
     
     public function __destruct() {
         $this->_numrows='';
+    }
+    
+    private function tableName($tableName)
+    {
+        return self::$_prefix.$tableName;
     }
 
 }

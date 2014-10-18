@@ -10,8 +10,17 @@ require_once 'mysqli.php';
 
 
 $db=new DB;
-$query='Select * FROM teams LIMIT  1';
+$query='Select * FROM '.DB::$_prefix.'teams LIMIT  1';
 
-$queryResult=$db->sqlQuery($query);
-echo "Num Rows: ".$db->numrows;
-$db->getResults();
+$queryResult=$db->rawQuery($query);
+
+/*Fetch rs by specific columns*/
+$columns=array('t_name');
+$limitFrom=1;
+$limitTo=5;
+$tableName='teams';
+echo DB::$_prefix;
+$db->selectQuery($tableName, $columns,$limitFrom,$limitTo);
+
+//echo "Num Rows: ".$db->numrows;
+//$db->getResults();
