@@ -76,6 +76,7 @@ class DB {
         $this->_numrows='';
     }
     
+    //get table name
     private function tableName($tableName)
     {
         return self::$_prefix.$tableName;
