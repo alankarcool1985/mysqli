@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `players` (
   `p_id` int(11) NOT NULL AUTO_INCREMENT,
   `t_id` int(11) NOT NULL,
-  `p_fname` varchar(200) NOT NULL,
+  `p_fname` varchar(201) NOT NULL,
   `p_lname` varchar(200) NOT NULL,
   `p_logo` varchar(200) NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT '1',
